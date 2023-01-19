@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom';
-import { editPemesan, hapusPemesan, listPemesan } from '../API/tiketportal';
+import { editPemesan, hapusPemesan, listPemesan, logOut } from '../API/tiketportal';
 
 const Admin = () => {
   const [nama, setNama] = useState('');

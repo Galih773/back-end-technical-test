@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom';
-import { showDetail, updateStatus } from '../API/tiketportal';
+import { logOut, showDetail, updateStatus } from '../API/tiketportal';
 
 const CheckTiket = () => {
   const [pemesan, setPemesan] = useState(null);
