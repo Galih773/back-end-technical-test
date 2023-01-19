@@ -53,6 +53,12 @@ class PenontonController extends Controller
     public function show($idTiket)
     {
         $penoton = Penonton::where('status', 'unchecked')->where('kode_tiket', $idTiket)->first();
+
+        if(!$penoton) return response()->json([
+            'status' => 'error',
+            'message' => 'ID Kartu not found',
+        ], 404);
+
         return response()->json([
             'status' => 'success',
             'penonton' => $penoton,

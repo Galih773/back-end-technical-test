@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
 import { logOut, showDetail, updateStatus } from '../API/tiketportal';
+import 'react-toastify/dist/ReactToastify.css';
 
 const CheckTiket = () => {
   const [pemesan, setPemesan] = useState(null);
@@ -18,6 +20,10 @@ const CheckTiket = () => {
       console.log(res.data)
       console.log("berhasil")
     }).catch(err => {
+      if(err.response.data.message === "Unauthenticated.") {
+        localStorage.removeItem('token')
+        navigate('/login')
+      }
       console.log("data tidak ada")
       setPemesan(null)
     })
@@ -26,6 +32,10 @@ const CheckTiket = () => {
   const logoutHandler = () => {
     logOut().then(res => {
       console.log(res)
+      localStorage.removeItem("token")
+      navigate('/login')
+    }).catch(err => {
+      console.log(err.response.data)
       localStorage.removeItem("token")
       navigate('/login')
     })
@@ -39,7 +49,12 @@ const CheckTiket = () => {
         console.log(res.data)
         setPemesan(res.data.penonton)
       }).catch(err => {
-        console.log("ID tiket tidak valid")
+        if(err.response.data === "Unauthenticated.") {
+          localStorage.removeItem('token')
+          navigate('/login')
+        } else if (err.response.data.status === "error") {
+          toast.error(err.response.data.message)
+        }
       })
   }
 
@@ -99,8 +114,8 @@ const CheckTiket = () => {
             (
               <form className="mx-auto mt-8 w-[670px] min-h-[670px] px-8 py-10 flex flex-col justify-between bg-white rounded-lg">
                   <div className='mb-5'>
-                      <h1 className='text-4xl font-medium'>Hello there</h1>
-                      <span className='text-base font-medium'>This is form to get tiket id</span>
+                      <h1 className='text-4xl font-medium'>Detail Pemesan Tiket</h1>
+                      <span className='text-base font-medium'>ID Tiket: {pemesan.kode_tiket}</span>
                   </div>
 
                   <div className="flex flex-col gap-5 min-h-[400px]">
@@ -135,7 +150,7 @@ const CheckTiket = () => {
               </form>
             )
           }
-
+          <ToastContainer />
       </div>
   )
 }

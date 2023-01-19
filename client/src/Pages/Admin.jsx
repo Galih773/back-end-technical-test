@@ -21,12 +21,21 @@ const Admin = () => {
       listPemesan().then(res => {
         console.log(res.data)
         setPemesan(res.data.penonton)
+      }).catch(err => {
+        if(err.response.data.message === "Unauthenticated.") {
+          localStorage.removeItem('token')
+          navigate('/login')
+        }
       })
   },[])
 
   const logoutHandler = () => {
     logOut().then(res => {
       console.log(res)
+      localStorage.removeItem("token")
+      navigate('/login')
+    }).catch(err => {
+      console.log(err.response.data)
       localStorage.removeItem("token")
       navigate('/login')
     })

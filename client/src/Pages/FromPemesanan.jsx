@@ -14,7 +14,7 @@ const FromPemesanan = () => {
 
   useEffect(()=> {
       if(localStorage.getItem('token')){
-          navigate('/')
+          navigate('/admin')
       }
   },[])
 
@@ -25,6 +25,10 @@ const FromPemesanan = () => {
   const logoutHandler = () => {
     logOut().then(res => {
       console.log(res)
+      localStorage.removeItem("token")
+      navigate('/login')
+    }).catch(err => {
+      console.log(err.response.data)
       localStorage.removeItem("token")
       navigate('/login')
     })
@@ -84,7 +88,7 @@ const FromPemesanan = () => {
             (
               <div className="mx-auto mt-8 w-[670px] gap-4 h-auto px-8 py-10 flex flex-col justify-between bg-white rounded-lg">
                 <div className='mb-5'>
-                  <h1 className='text-4xl font-medium'>Tiket Created</h1>
+                  <h1 className='text-4xl font-medium'>Form Pemesanan</h1>
                 </div>
 
                 <div className="flex flex-col gap-5 h-fit">
