@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\PenontonController;
+use App\Models\Penonton;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,3 +28,4 @@ Route::controller(AuthController::class)->group(function () {
 });
 
 Route::resource('penonton', PenontonController::class);
+Route::post('editPenonton', [PenontonController::class, 'edit']);

@@ -6,14 +6,11 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  //validation
-  const [validation, setValidation] = useState([]);
-
   const navigate = useNavigate();
 
   useEffect(()=> {
       if(localStorage.getItem('token')){
-          navigate('/')
+          navigate('/admin')
       }
   },[])
 
@@ -29,6 +26,7 @@ const Login = () => {
       login(formData).then(res => {
         console.log(res.data)
         localStorage.setItem('token', res.data.authorisation.token)
+        navigate('/admin')
       })
       .catch(error => {
         console.log(error.response.data)

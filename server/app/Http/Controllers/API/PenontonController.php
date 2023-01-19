@@ -59,6 +59,25 @@ class PenontonController extends Controller
         ]);
     }
 
+    public function edit(Request $request)
+    {
+        $penonton = Penonton::find($request->id);
+        $penonton->nama = $request->nama;
+        $penonton->email = $request->email;
+        $penonton->no_telp = $request->no_telp;
+        $penonton->umur = $request->umur;
+        $penonton->alamat = $request->alamat;
+        $penonton->save();
+
+        $all = Penonton::all();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Penonton updated successfully',
+            'penonton' => $all,
+        ]);
+    }
+
     public function update($idTiket)
     {
         $penonton = Penonton::where('status', 'unchecked')->where('kode_tiket', $idTiket)->first();
@@ -74,13 +93,13 @@ class PenontonController extends Controller
 
     public function destroy($id)
     {
-        $todo = Penonton::find($id);
-        $todo->delete();
+        $penonton = Penonton::find($id);
+        $penonton->delete();
 
         return response()->json([
             'status' => 'success',
-            'message' => 'Todo deleted successfully',
-            'todo' => $todo,
+            'message' => 'penonton deleted successfully',
+            'penon' => $penonton,
         ]);
     }
 }
